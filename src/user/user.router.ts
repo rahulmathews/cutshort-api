@@ -132,9 +132,13 @@ export class UserRouter {
      *                            example: Successfully updated
      *                          user:
      *                            type: object
-     *                            example:
-     *                              - id: 6acd3342deba72cdaef
-     *                                email: something1@gmail.com
+     *                            properties:
+     *                              id:
+     *                                type: string
+     *                                example: 62abc22cae2de52ecab
+     *                              email:
+     *                                type: string
+     *                                example: something23@gmail.com
      *
      *              '404':
      *                  description: Not found

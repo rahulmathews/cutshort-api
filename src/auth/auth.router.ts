@@ -112,7 +112,7 @@ export class AuthRouter {
      *                            type: string
      *                            example: AccessT0KeN
      *                          expiresIn:
-     *                            type: number
+     *                            type: string
      *                            example: 3600
      *              '404':
      *                  description: Not found

@@ -29,13 +29,13 @@ enum role {
 }
 
 model Todo {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   text       String
-  status     status   @default(TODO)
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String   @db.ObjectId
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime
+  status     status    @default(TODO)
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   String    @db.ObjectId
+  createdAt  DateTime  @default(now())
+  modifiedAt DateTime?
 }
 
 enum status {
