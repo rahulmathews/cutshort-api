@@ -153,6 +153,12 @@ export class PostRouter {
      *                type: integer
      *                default: 10
      *              description: Number of items to return
+     *            - in: query
+     *              name: search
+     *              schema:
+     *                type: string
+     *                example: post
+     *              description: Search value for post
      *          responses:
      *              '200':
      *                 description: OK

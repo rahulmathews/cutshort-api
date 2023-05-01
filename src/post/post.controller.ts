@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Request, Response, NextFunction } from 'express';
 // import createError from 'http-errors';
 import { ModifiedResponse } from '../types/express';
-import { PrismaClient, role } from '@prisma/client';
+import { Prisma, PrismaClient, role } from '@prisma/client';
 
 export class PostController {
   static createPost = async (
@@ -39,6 +39,7 @@ export class PostController {
     try {
       let page = req.query.page as string | number;
       let limit = req.query.limit as string | number;
+      const search = req.query.search as string;
 
       if (_.isNil(page)) {
         page = 1;
@@ -53,18 +54,47 @@ export class PostController {
 
       const prisma = new PrismaClient();
 
-      const posts = await prisma.post.findMany({
-        skip: (page - 1) * limit,
-        take: limit,
-        where: {
-          ...(_.get(req.user, 'role') === role.ADMIN
-            ? {}
-            : {
+      let filterObj: Prisma.TodoWhereInput = {};
+
+      if (_.get(req.user, 'role') === role.ADMIN) {
+        if (search) {
+          filterObj = {
+            text: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          };
+        }
+      } else {
+        if (search) {
+          filterObj = {
+            AND: [
+              {
+                text: {
+                  contains: search,
+                  mode: 'insensitive',
+                },
+              },
+              {
                 authorId: {
                   equals: _.get(req.user, 'id'),
                 },
-              }),
-        },
+              },
+            ],
+          };
+        } else {
+          filterObj = {
+            authorId: {
+              equals: _.get(req.user, 'id'),
+            },
+          };
+        }
+      }
+
+      const posts = await prisma.post.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+        where: filterObj,
       });
 
       return res.status(200).json({

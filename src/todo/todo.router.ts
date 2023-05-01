@@ -156,6 +156,12 @@ export class TodoRouter {
      *                type: integer
      *                default: 10
      *              description: Number of items to return
+     *            - in: query
+     *              name: search
+     *              schema:
+     *                type: string
+     *                example: todo
+     *              description: Search value for todo
      *          responses:
      *              '200':
      *                 description: OK
