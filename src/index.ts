@@ -9,6 +9,7 @@ import { LoggerUtil, ErrorHandlerUtil, PassportUtil } from './utils';
 import { AuthRouter } from './auth';
 import { UserRouter } from './user';
 import { TodoRouter } from './todo';
+import { PostRouter } from './post';
 
 const app: Express = express();
 
@@ -83,6 +84,7 @@ app.get('/ping', (_req: Request, res: Response) => {
 app.use('/auth', AuthRouter.init());
 app.use('/user', UserRouter.init());
 app.use('/todo', TodoRouter.init());
+app.use('/post', PostRouter.init());
 
 // catch 404 for routes which are not found and forward to error handler
 app.use(function (_req, _res, next) {
