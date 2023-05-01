@@ -17,8 +17,19 @@
     "noUnusedParameters": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "strictNullChecks": false
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+
+    /* Module Resolution Options */
+    "baseUrl": ".",
+    "esModuleInterop": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+
+    /* Advanced Options */
   },
-  "include": ["src/**/*", "__tests__/**/*"],
-  "typeRoots": ["./@types", "./node_modules/@types"]
+  "include": ["src/**/*", "__tests__/**/*"]
 }

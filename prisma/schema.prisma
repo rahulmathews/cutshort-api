@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  email                   String    @unique
+  password                String
+  role                    role      @default(USER)
+  name                    String?
+  Post                    Post[]
+  Todo                    Todo[]
+  lastCreatedAccessToken  DateTime?
+  lastCreatedRefreshToken DateTime?
+  createdAt               DateTime  @default(now())
+}
+
+enum role {
+  ADMIN
+  USER
+}
+
+model Todo {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  text       String
+  status     status   @default(TODO)
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String   @db.ObjectId
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime
+}
+
+enum status {
+  TODO
+  DONE
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String    @db.ObjectId
+  Comments  Comment[]
+  createdAt DateTime  @default(now())
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String   @db.ObjectId
+  createdAt DateTime @default(now())
+}
