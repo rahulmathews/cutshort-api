@@ -2,12 +2,20 @@ name: github-runner
 on: [push]
 
 jobs:
-  install:
+  run-action:
+    name: Run action
     runs-on: ubuntu-latest
+
     steps:
-      - run: npm run install
-  build:
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - run: npm run build
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm run install
+
+      - name: Build
+        run: npm run build
