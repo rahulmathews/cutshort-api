@@ -1,0 +1,13 @@
+name: github-runner
+on: [push]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run install
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run build
